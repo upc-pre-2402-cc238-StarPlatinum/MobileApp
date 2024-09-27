@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.StarPlatinum.unityvolunteer.R
@@ -61,8 +62,11 @@ fun MainScaffold(
 @Composable
 fun TopBar(onOpenDrawer: () -> Unit) {
     TopAppBar(
+        modifier = Modifier
+            .windowInsetsPadding( // Ajusta el TopBar para evitar áreas no seguras
+                WindowInsets.systemBars.only(WindowInsetsSides.Bottom)
+            ),
         title = {
-            // Aquí agregamos el logo y el título juntos, alineado al centro
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -71,7 +75,7 @@ fun TopBar(onOpenDrawer: () -> Unit) {
                 AsyncImage(
                     model = R.drawable.unitylogo,  // Imagen desde los recursos locales
                     contentDescription = "Logo de Unity Volunteer",
-                    modifier = Modifier.size(150.dp),
+                    modifier = Modifier.size(120.dp),
                     contentScale = ContentScale.Fit
                 )
             }
@@ -84,20 +88,29 @@ fun TopBar(onOpenDrawer: () -> Unit) {
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color(0xFF3894B6),  // Color del fondo del TopBar
             titleContentColor = Color.White,     // Color del texto
-            navigationIconContentColor = Color.White  // Color del icono de menú
+            navigationIconContentColor = Color.White  // Color del ícono de menú
         )
     )
 }
 
+@Preview(showBackground = true)
+@Composable
+fun showtopappbarpreview(){
+
+    MainScaffold(currentScreen = "", onScreenChange = {}) {
+
+    }
+}
 
 
 @Composable
 fun DrawerContent(onItemSelected: (String) -> Unit) {
     Column(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier.padding(16.dp)
-        .background(color = Color.White)
-        .fillMaxHeight()
+        modifier = Modifier
+            .padding(16.dp)
+            .background(color = Color.White)
+            .fillMaxHeight()
         ) {
         Text("Perfil", modifier = Modifier
             .padding(8.dp)
